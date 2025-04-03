@@ -1,0 +1,21 @@
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1 class="text-center">Task List</h1>
+    <form method="post" class="d-flex gap-2">
+        {% csrf_token %}
+        <input type="text" name="title" class="form-control" placeholder="Enter task" required>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    <ul class="list-group mt-3">
+        {% for task in tasks %}
+            <li class="list-group-item {% if task.completed %}text-muted text-decoration-line-through{% endif %}">
+                {{ task.title }}
+                <a href="{% url 'complete_task' task.id %}" class="btn btn-success btn-sm">✔ Complete</a>
+                <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm">🗑 Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
